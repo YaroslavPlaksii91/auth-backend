@@ -1,10 +1,13 @@
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const { basedir } = global;
 
 const { joiRegisterSchema } = require(`${basedir}/models`);
 const { user: service } = require(`${basedir}/services`);
 const { createError } = require(`${basedir}/helpers`);
+
+const { SECRET_KEY } = process.env;
 
 const signup = async (req, res) => {
   const { error } = joiRegisterSchema.validate(req.body);
@@ -27,10 +30,16 @@ const signup = async (req, res) => {
     password: hashPassword,
   });
 
+  const payload = {
+    id: result._id,
+  };
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "24h" });
+
   res.status(201).json({
     status: "success",
     code: 201,
     data: {
+      token,
       user: {
         firstName: result.firstName,
         lastName: result.lastName,
