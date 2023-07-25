@@ -35,12 +35,12 @@ const userSchema = Schema(
 
 const joiRegisterSchema = Joi.object({
   firstName: Joi.string()
-    .pattern(/^[а-яА-ЯїЇa-zA-Z]+$/)
+    .pattern(/^[а-яА-ЯїЇіІa-zA-Z]+$/)
     .min(2)
     .max(30)
     .required(),
   lastName: Joi.string()
-    .pattern(/^[а-яА-ЯїЇa-zA-Z]+$/)
+    .pattern(/^[а-яА-ЯїЇіІa-zA-Z]+$/)
     .min(2)
     .max(30)
     .required(),

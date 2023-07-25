@@ -35,6 +35,8 @@ const signup = async (req, res) => {
   };
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "24h" });
 
+  await service.updateUser(result._id, { token });
+
   res.status(201).json({
     status: "success",
     code: 201,
